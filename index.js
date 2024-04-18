@@ -76,14 +76,14 @@ app.get('/artwork', async (req, res) => {
 });
 
 app.get('/search', async (req, res) => {
-    const { field, query } = req.query;
+    const { query } = req.query;
 
-    if (!field || !query) {
-        return res.status(400).send('Both "field" and "query" parameters are required.');
+    if (!query) {
+        return res.status(400).send('The "query" parameter is required.');
     }
 
     try {
-        const artworks = await Artwork.find({ [field]: query });
+        const artworks = await Artwork.find({ $text: { $search: query } });
         res.json(artworks);
     } catch (error) {
         console.error('Error searching for artworks:', error);

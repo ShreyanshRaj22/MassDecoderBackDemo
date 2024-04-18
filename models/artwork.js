@@ -8,4 +8,6 @@ const artworkSchema = new mongoose.Schema({
     name: { type: String, required: true }
 });
 
+artworkSchema.index({ '$**': 'text' });
+
 module.exports = mongoose.model('Artwork', artworkSchema);
