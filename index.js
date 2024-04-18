@@ -67,11 +67,14 @@ app.post('/upload', async (req, res) => {
 
 app.get('/artwork', async (req, res) => {
     try {
-        const artworks = await Artwork.find();
-        res.json(artworks);
+        const { limit } = req.query;
+        const randomArtworks = await Artwork.aggregate([
+            { $sample: { size: parseInt(limit) } }
+        ]);
+        res.json(randomArtworks);
     } catch (error) {
-        console.error('Error fetching artworks:', error);
-        res.status(500).send('Error fetching artworks.');
+        console.error('Error fetching random artworks:', error);
+        res.status(500).send('Error fetching random artworks.');
     }
 });
 
