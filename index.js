@@ -3,6 +3,7 @@ const AWS = require('aws-sdk');
 const port = process.env.PORT || 5000;
 const fileUpload = require('express-fileupload');
 const Artwork = require('./models/artwork')
+const User = require('./models/user')
 const cors = require('cors'); // Import cors middleware
 const mongoDB = require("./db");
 mongoDB();
@@ -86,6 +87,17 @@ app.get('/allartwork', async (req, res) => {
     } catch (error) {
         console.error('Error fetching all artworks:', error);
         res.status(500).send('Error fetching all artworks.');
+    }
+});
+
+app.get('/allusers', async (req, res) => {
+    try {
+        const allUsers = await User.find({});
+        console.log('All Users:', allUsers);
+        res.json(allUsers);
+    } catch (error) {
+        console.error('Error fetching all users:', error);
+        res.status(500).send('Error fetching all users.');
     }
 });
 
