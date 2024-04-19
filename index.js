@@ -78,6 +78,18 @@ app.get('/artwork', async (req, res) => {
     }
 });
 
+app.get('/allartwork', async (req, res) => {
+    try {
+        const allArtworks = await Artwork.find({});
+        console.log('All Artworks:', allArtworks);
+        res.json(allArtworks);
+    } catch (error) {
+        console.error('Error fetching all artworks:', error);
+        res.status(500).send('Error fetching all artworks.');
+    }
+});
+
+
 app.get('/search', async (req, res) => {
     const { query } = req.query;
 
